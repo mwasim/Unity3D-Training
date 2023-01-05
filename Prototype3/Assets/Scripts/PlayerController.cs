@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _gravityModifier = 1.5f;
     [SerializeField] private bool _isOnGround = true;
 
+    private Animator _playerAnim;
     private bool _isGameOver = false;
     public bool IsGameOver => _isGameOver;
 
@@ -14,16 +15,20 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _playerAnim = GetComponent<Animator>();
+
         Physics.gravity *= _gravityModifier;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && _isOnGround)
+        if (Input.GetKeyDown(KeyCode.Space) && _isOnGround && !_isGameOver)
         {
             _rigidbody.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
             _isOnGround = false;
+
+            _playerAnim.SetTrigger("Jump_trig");
         }
     }
 
@@ -37,6 +42,10 @@ public class PlayerController : MonoBehaviour
         else if (collision.gameObject.CompareTag("Obstacle"))
         {
             _isGameOver = true;
+
+            _playerAnim.SetBool("Death_b", true);
+            _playerAnim.SetInteger("DeathType_int", 1);
+
             Debug.Log("Game Over");
         }
     }
