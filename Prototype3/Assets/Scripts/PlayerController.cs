@@ -2,11 +2,23 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Basic Settings")]
     [SerializeField] private int _jumpForce = 10;
     [SerializeField] private float _gravityModifier = 1.5f;
     [SerializeField] private bool _isOnGround = true;
 
+    [Header("Particle Effects")]
+    [SerializeField] private ParticleSystem _explosionParticles;
+    [SerializeField] private ParticleSystem _dirtSplatterParticles;
+
+    [Header("Audio Settings")]
+    [SerializeField] private AudioClip _jumpSound;
+    [SerializeField] private AudioClip _crashSound;
+    
+
     private Animator _playerAnim;
+    private AudioSource _playerAudioSource;
+
     private bool _isGameOver = false;
     public bool IsGameOver => _isGameOver;
 
@@ -16,6 +28,7 @@ public class PlayerController : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody>();
         _playerAnim = GetComponent<Animator>();
+        _playerAudioSource = GetComponent<AudioSource>();
 
         Physics.gravity *= _gravityModifier;
     }
@@ -29,6 +42,11 @@ public class PlayerController : MonoBehaviour
             _isOnGround = false;
 
             _playerAnim.SetTrigger("Jump_trig");
+
+            if (_dirtSplatterParticles != null)
+                _dirtSplatterParticles.Stop();
+
+            _playerAudioSource.PlayOneShot(_jumpSound, 1f);
         }
     }
 
@@ -38,6 +56,10 @@ public class PlayerController : MonoBehaviour
         {
             //Debug.Log("Collided with the ground");
             _isOnGround = true;
+
+            if (_dirtSplatterParticles != null && _dirtSplatterParticles.isStopped)
+                _dirtSplatterParticles.Play();
+
         }
         else if (collision.gameObject.CompareTag("Obstacle"))
         {
@@ -45,6 +67,15 @@ public class PlayerController : MonoBehaviour
 
             _playerAnim.SetBool("Death_b", true);
             _playerAnim.SetInteger("DeathType_int", 1);
+
+            //play smoke/explosion particle effect
+            if (_explosionParticles != null)
+                _explosionParticles.Play();
+
+            if (_dirtSplatterParticles != null)
+                _dirtSplatterParticles.Stop();
+
+            _playerAudioSource.PlayOneShot(_crashSound, 1f);
 
             Debug.Log("Game Over");
         }
