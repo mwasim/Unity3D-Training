@@ -36,13 +36,13 @@ public class PlayerControllerX : MonoBehaviour
     void Update()
     {
         // While space is pressed and player is low enough, float up
-        if (Input.GetKey(KeyCode.Space) && !gameOver && transform.position.y <= _upperLimit)
+        if (Input.GetKey(KeyCode.Space) && !gameOver && transform.position.y <= _lowerLimit)
         {
             //playerRb.AddForce(Vector3.up * floatForce);
             playerRb.AddForce(Vector3.up * floatForce, ForceMode.Impulse);
         }
 
-        if (transform.position.y > _upperLimit) transform.position = new Vector3(transform.position.x, _upperLimit, transform.position.z);
+        //if (transform.position.y > _upperLimit) transform.position = new Vector3(transform.position.x, _upperLimit - 1f, transform.position.z);
     }
 
     private void OnCollisionEnter(Collision other)
