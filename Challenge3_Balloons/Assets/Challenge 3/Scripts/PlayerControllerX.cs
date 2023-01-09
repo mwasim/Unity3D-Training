@@ -1,12 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerControllerX : MonoBehaviour
 {
     public bool gameOver;
 
     public float floatForce;
+
+    [SerializeField] private float _upperLimit = 13.50f;
+    [SerializeField] private float _lowerLimit = 5.50f;
+
     private float gravityModifier = 1.5f;
     private Rigidbody playerRb;
 
@@ -26,7 +28,7 @@ public class PlayerControllerX : MonoBehaviour
         playerRb = GetComponent<Rigidbody>();
 
         // Apply a small upward force at the start of the game
-        playerRb.AddForce(Vector3.up * 5, ForceMode.Impulse);
+        playerRb.AddForce(Vector3.up * floatForce, ForceMode.Impulse);
 
     }
 
@@ -34,10 +36,13 @@ public class PlayerControllerX : MonoBehaviour
     void Update()
     {
         // While space is pressed and player is low enough, float up
-        if (Input.GetKey(KeyCode.Space) && !gameOver)
+        if (Input.GetKey(KeyCode.Space) && !gameOver && transform.position.y <= _upperLimit)
         {
-            playerRb.AddForce(Vector3.up * floatForce);
+            //playerRb.AddForce(Vector3.up * floatForce);
+            playerRb.AddForce(Vector3.up * floatForce, ForceMode.Impulse);
         }
+
+        if (transform.position.y > _upperLimit) transform.position = new Vector3(transform.position.x, _upperLimit, transform.position.z);
     }
 
     private void OnCollisionEnter(Collision other)
@@ -50,7 +55,7 @@ public class PlayerControllerX : MonoBehaviour
             gameOver = true;
             Debug.Log("Game Over!");
             Destroy(other.gameObject);
-        } 
+        }
 
         // if player collides with money, fireworks
         else if (other.gameObject.CompareTag("Money"))
