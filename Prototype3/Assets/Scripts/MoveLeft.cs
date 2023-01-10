@@ -21,7 +21,10 @@ public class MoveLeft : MonoBehaviour
 
         if (isGameOver == false)
         {
-            transform.Translate(Vector3.left * Time.fixedDeltaTime * _speed);
+            //if speed key is pressed, speed is increased twice
+            var movementSpeed = Input.GetKeyDown(KeyCode.S) ? _speed * 2 : _speed;
+
+            transform.Translate(Vector3.left * Time.fixedDeltaTime * movementSpeed);
         }
 
         if (transform.position.x < _leftBound && gameObject.CompareTag("Obstacle"))

@@ -4,8 +4,9 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Basic Settings")]
     [SerializeField] private int _jumpForce = 10;
+    [SerializeField] private int _doubleJumpForce = 6;
     [SerializeField] private float _gravityModifier = 1.5f;
-    [SerializeField] private bool _isOnGround = true;
+    [SerializeField] private bool __isOnGround = true;
 
     [Header("Particle Effects")]
     [SerializeField] private ParticleSystem _explosionParticles;
@@ -23,8 +24,11 @@ public class PlayerController : MonoBehaviour
     public bool IsGameOver => _isGameOver;
 
     private Rigidbody _rigidbody;
-    private int _inAirJumpCount = 0;
-    const int MaxJumpCount = 2;
+
+    private bool _doubleJumpUsed;
+
+    //private int _inAirJumpCount = 0;
+    //const int MaxJumpCount = 2;
 
     // Start is called before the first frame update
     void Start()
@@ -39,10 +43,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && (_isOnGround || _inAirJumpCount < MaxJumpCount) && !_isGameOver)
+        if (Input.GetKeyDown(KeyCode.Space) && __isOnGround && !_isGameOver)
         {
             _rigidbody.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
-            _isOnGround = false;
+            __isOnGround = false;
 
             _playerAnim.SetTrigger("Jump_trig");
 
@@ -51,7 +55,15 @@ public class PlayerController : MonoBehaviour
 
             _playerAudioSource.PlayOneShot(_jumpSound, 1f);
 
-            _inAirJumpCount++;
+            //_inAirJumpCount++;
+            _doubleJumpUsed = false;
+        }
+        else if (Input.GetKeyDown(KeyCode.Space) && !__isOnGround && !_doubleJumpUsed)
+        {
+            _doubleJumpUsed = true;
+            _rigidbody.AddForce(Vector3.up * _doubleJumpForce, ForceMode.Impulse);
+            _playerAnim.Play("Running_Jump", 3, 0f);
+            _playerAudioSource.PlayOneShot(_jumpSound, 1.0f);
         }
     }
 
@@ -60,8 +72,8 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             //Debug.Log("Collided with the ground");
-            _isOnGround = true;
-            _inAirJumpCount = 0; //reset jump count
+            __isOnGround = true;
+            //_inAirJumpCount = 0; //reset jump count
 
             if (_dirtSplatterParticles != null && _dirtSplatterParticles.isStopped)
                 _dirtSplatterParticles.Play();
