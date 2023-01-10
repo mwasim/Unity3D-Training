@@ -23,6 +23,9 @@ public class PlayerController : MonoBehaviour
     public bool IsGameOver => _isGameOver;
 
     private Rigidbody _rigidbody;
+    private int _inAirJumpCount = 0;
+    const int MaxJumpCount = 2;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,7 +39,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && _isOnGround && !_isGameOver)
+        if (Input.GetKeyDown(KeyCode.Space) && (_isOnGround || _inAirJumpCount < MaxJumpCount) && !_isGameOver)
         {
             _rigidbody.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
             _isOnGround = false;
@@ -47,6 +50,8 @@ public class PlayerController : MonoBehaviour
                 _dirtSplatterParticles.Stop();
 
             _playerAudioSource.PlayOneShot(_jumpSound, 1f);
+
+            _inAirJumpCount++;
         }
     }
 
@@ -56,6 +61,7 @@ public class PlayerController : MonoBehaviour
         {
             //Debug.Log("Collided with the ground");
             _isOnGround = true;
+            _inAirJumpCount = 0; //reset jump count
 
             if (_dirtSplatterParticles != null && _dirtSplatterParticles.isStopped)
                 _dirtSplatterParticles.Play();
