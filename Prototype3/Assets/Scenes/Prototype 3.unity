@@ -1006,5 +1006,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fdc6dfa0a3f542b0ab8d68c419ef262, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _obstaclePrefab: {fileID: 9002886422596233084, guid: 150c7518ce38b4336995ab90cd248ed7, type: 3}
+  _obstaclePrefabList:
+  - {fileID: 9002886422596233084, guid: 150c7518ce38b4336995ab90cd248ed7, type: 3}
+  - {fileID: 9002886422596233084, guid: 2debfcba8e2c74caab8ee0f16186bd2a, type: 3}
+  - {fileID: 9002886422596233084, guid: ba49b5ba6c69849a581bd67548db1c77, type: 3}
   _spawnPos: {x: 25, y: 0, z: 0}

@@ -1,10 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    [SerializeField] private GameObject _obstaclePrefab;
+    [SerializeField] private List<GameObject> _obstaclePrefabList;
     [SerializeField] private Vector3 _spawnPos = new Vector3(25, 0, 0);
 
     private PlayerController _palyerController;
@@ -14,7 +13,7 @@ public class SpawnManager : MonoBehaviour
     {
         _palyerController = FindObjectOfType<PlayerController>();
 
-        InvokeRepeating(nameof(SpawnObstacle), 1f, 2f);
+        InvokeRepeating(nameof(SpawnObstacle), 1f, 2.5f);
     }
 
     private void SpawnObstacle()
@@ -23,7 +22,9 @@ public class SpawnManager : MonoBehaviour
 
         if (isGameOver == false)
         {
-            Instantiate(_obstaclePrefab, _spawnPos, _obstaclePrefab.transform.rotation);
+            var randomIndex = Random.Range(0, _obstaclePrefabList.Count);
+
+            Instantiate(_obstaclePrefabList[randomIndex], _spawnPos, _obstaclePrefabList[randomIndex].transform.rotation);
         }
     }
 }
