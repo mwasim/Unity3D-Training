@@ -24,5 +24,12 @@ public class Enemy : MonoBehaviour
         var lookDirection = (_player.transform.position - transform.position).normalized;
 
         _enemyRb.AddForce(lookDirection * _speed);
+
+
+        ////destroy enemey if it falls
+        if (transform.position.y < -10f) //position is below the ground -10
+        {
+            Destroy(gameObject);
+        }
     }
 }
