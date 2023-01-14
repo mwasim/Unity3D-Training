@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     private float _zBound = 3.5f;
 
     private Rigidbody _rbPlayer;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,5 +36,21 @@ public class PlayerController : MonoBehaviour
     {
         if (transform.position.z < -_zBound) transform.position = new Vector3(transform.position.x, transform.position.y, -_zBound);
         if (transform.position.z > _zBound) transform.position = new Vector3(transform.position.x, transform.position.y, _zBound);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("Player collided with an Enemy");
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Powerup"))
+        {
+            Destroy(other.gameObject); //destroy the powerup as it's consumed.
+        }
     }
 }
