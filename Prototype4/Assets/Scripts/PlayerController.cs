@@ -6,6 +6,9 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] GameObject _powerupIndicator;
+
+    public bool _isGameOver = false;
+
     private Rigidbody _playerRb;
     private GameObject _focalPoint;
 
@@ -28,6 +31,12 @@ public class PlayerController : MonoBehaviour
         _playerRb.AddForce(_focalPoint.transform.forward * _speed * forwardInput);
 
         _powerupIndicator.transform.position = transform.position + new Vector3(0, -0.5f, 0);
+
+        //if player falls game is over
+        if(transform.position.y < -10)
+        {
+
+        }
     }
 
     private void OnTriggerEnter(Collider other)

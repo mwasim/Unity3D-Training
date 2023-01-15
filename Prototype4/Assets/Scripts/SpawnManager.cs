@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    [SerializeField] private GameObject _enemyPrefab;
+    [SerializeField] private List<GameObject> _enemyPrefabList;
     [SerializeField] private GameObject _powerupPrefab;
     [SerializeField] private int _waveNumber = 1;
 
@@ -28,7 +28,9 @@ public class SpawnManager : MonoBehaviour
         {
             //var randomSpawnPos = GenerateSpawnPosition();
 
-            Instantiate(_enemyPrefab, GenerateSpawnPosition(), _enemyPrefab.transform.rotation);
+            var randomIndex = Random.Range(0, _enemyPrefabList.Count);
+
+            Instantiate(_enemyPrefabList[randomIndex], GenerateSpawnPosition(), _enemyPrefabList[randomIndex].transform.rotation);
         }
 
         //also spawn powerups with each enemy wave
