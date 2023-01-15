@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
         //if player falls game is over
         if(transform.position.y < -10)
         {
-
+            _isGameOver = true;
         }
     }
 

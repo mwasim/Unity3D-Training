@@ -11,6 +11,8 @@ public class SpawnManager : MonoBehaviour
     private float _spawnRange = -9.0f;
     private int _enemyCount;
 
+    private PlayerController _playerController;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +21,10 @@ public class SpawnManager : MonoBehaviour
         //var _randomZPos = Random.Range(-_spawnRange, _spawnRange);
         //var randomSpawnPos = new Vector3(_randomXPos, 0, _randomZPos);
 
-        SpawnEnemyWave(_waveNumber);
+        _playerController = FindObjectOfType<PlayerController>();
+
+        if (!_playerController._isGameOver) //if game is not over then spawn enemies
+            SpawnEnemyWave(_waveNumber);
     }
 
     private void SpawnEnemyWave(int noOfEnemiesToSpawn)
@@ -52,7 +57,7 @@ public class SpawnManager : MonoBehaviour
     {
         _enemyCount = FindObjectsOfType<Enemy>().Length;
 
-        if (_enemyCount <= 0)
+        if (_enemyCount <= 0  && !_playerController._isGameOver)
         {
             _waveNumber++;
             SpawnEnemyWave(_waveNumber);
