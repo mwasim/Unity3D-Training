@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -12,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _scoreText;
     //[SerializeField] private TextMeshProUGUI _gameOverText;
     [SerializeField] private GameObject _gameOverMenu;
+    [SerializeField] private GameObject _startMenu;
     [SerializeField] private Button _buttonRestart;
 
     private int _score;
@@ -20,10 +22,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _score = 0;
-        ScoreText = _score;
 
-        StartCoroutine(SpawnTarget());
     }
 
     private void OnEnable()
@@ -42,7 +41,7 @@ public class GameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(_spawnRate);
 
-            var randomIndex = Random.Range(0, _targets.Count);
+            var randomIndex =UnityEngine.Random.Range(0, _targets.Count);
             Instantiate(_targets[randomIndex]);
         }
     }
@@ -65,6 +64,19 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void StartGame(GameDifficulty difficulty)
+    {
+        _startMenu.gameObject.SetActive(false);
+
+        _isGameOver = false;
+        _score = 0;
+        ScoreText = _score;
+
+        _spawnRate /= (int)difficulty;
+
+        StartCoroutine(SpawnTarget());
     }
 
     public bool IsGameOver => _isGameOver;
