@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class Target : MonoBehaviour
 {
+    [SerializeField] private int _pointValue;
+    [SerializeField] ParticleSystem _explosionParticle;
+
     private Rigidbody _targetRb;
+    private GameManager _gameManager;
 
     private float _minSpeed = 12f, _maxSpeed = 16f;
     private float _maxTorque = 10;
@@ -15,6 +19,7 @@ public class Target : MonoBehaviour
     void Start()
     {
         _targetRb = GetComponent<Rigidbody>();
+        _gameManager = FindObjectOfType<GameManager>();
 
         _targetRb.AddForce(RandomForce, ForceMode.Impulse);
         _targetRb.AddTorque(RandomTorque, RandomTorque, RandomTorque);
@@ -25,6 +30,8 @@ public class Target : MonoBehaviour
     private void OnMouseDown()
     {
         Destroy(gameObject);
+        Instantiate(_explosionParticle, transform.position, _explosionParticle.transform.rotation);
+        _gameManager.UpdateScore(_pointValue);
     }
 
     private void OnTriggerEnter(Collider other)
