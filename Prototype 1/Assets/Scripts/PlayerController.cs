@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private int _speed = 20; //move 20 meters per second
+    [SerializeField] private int _horsePower = 20; //move 20 meters per second
     [SerializeField] private int _turnSpeed = 10; //move 20 meters per second
 
+    [SerializeField] GameObject _centerOfMass;
+
+    private Rigidbody _rbPlayer;
     private float _horizontalInput,  _forwardInput;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        _rbPlayer = GetComponent<Rigidbody>();
+        _rbPlayer.centerOfMass = _centerOfMass.transform.position;
     }
 
     private void FixedUpdate()
@@ -20,7 +24,8 @@ public class PlayerController : MonoBehaviour
         _horizontalInput = Input.GetAxis("Horizontal");
         _forwardInput = Input.GetAxis("Vertical");
 
-        transform.Translate(Vector3.forward * Time.fixedDeltaTime * _speed * _forwardInput);
+        //transform.Translate(Vector3.forward * Time.fixedDeltaTime * _horsePower * _forwardInput);
+        _rbPlayer.AddRelativeForce(Vector3.forward * _horsePower * _forwardInput);
 
         //transform.Translate(Vector3.right * Time.fixedDeltaTime * _turnSpeed * _horizontalInput);
 
