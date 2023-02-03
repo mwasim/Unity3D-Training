@@ -12,17 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 4
+  version: 5
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Water
-  m_Shader: {fileID: -6465566751694194690, guid: 6edfb4e550b0eab46b9c5248b63d0d97, type: 3}
-  m_ShaderKeywords: 
+  m_Shader: {fileID: -6465566751694194690, guid: 6edfb4e550b0eab46b9c5248b63d0d97,
+    type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -96,6 +98,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - Vector1_0f027488fa8f4de7b28d85aad9cc23e9: 1.21
     - Vector1_49d0179ad2f8442c9de7d681fce948aa: 20
@@ -131,8 +134,10 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_27a36fb9664c4cb8b3c572e3cf71f18a: {r: 0.003921554, g: 0.7529412, b: 0.65182763, a: 0}
-    - Color_d8eff6152fcf4911a7689f43172023fd: {r: 0.021075096, g: 0.24605417, b: 0.3490566, a: 1}
+    - Color_27a36fb9664c4cb8b3c572e3cf71f18a: {r: 0.003921554, g: 0.7529412, b: 0.65182763,
+        a: 0}
+    - Color_d8eff6152fcf4911a7689f43172023fd: {r: 0.021075096, g: 0.24605417, b: 0.3490566,
+        a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
