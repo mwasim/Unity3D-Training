@@ -732,7 +732,7 @@ AudioSource:
   MinDistance: 8.46
   MaxDistance: 10
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -742,12 +742,12 @@ AudioSource:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: -2.762148
+      outSlope: -2.762148
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.085
     - serializedVersion: 3
       time: 1
       value: 0
@@ -875,7 +875,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8629150801757689412, guid: c622e5b90376f0a4f815a11f9985af8a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c622e5b90376f0a4f815a11f9985af8a, type: 3}
 --- !u!1 &415998031
 GameObject:
@@ -2759,6 +2760,14 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!81 &1304817751
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1304817734}
+  m_Enabled: 1
 --- !u!1 &1342198703
 GameObject:
   m_ObjectHideFlags: 0
